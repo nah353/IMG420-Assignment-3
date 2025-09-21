@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt2gjgv746p3h"]
+
+[ext_resource type="Texture2D" uid="uid://mn6dwpmqsj31" path="res://space_game_2d_assets/ship_E.png" id="1_tt5l4"]
+
+[node name="TextureRect" type="TextureRect"]
+self_modulate = Color(0.011764706, 0.011764706, 0.011764706, 0)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_tt5l4")
+flip_v = true
+
+[node name="GrowingSprite" type="GrowingSprite" parent="."]
+growth_speed = 2.0
+modulate = Color(0.5137255, 0, 0.003921569, 1)
+position = Vector2(32, 31.000002)
+rotation = 3.1415927
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("1_tt5l4")

@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5l6jpr8gmxh3"]
+
+[ext_resource type="Script" uid="uid://cb5scxowp70wx" path="res://player.gd" id="1_sweqy"]
+[ext_resource type="Texture2D" uid="uid://d2c7xc2vwh6pt" path="res://space_game_2d_assets/effect_yellow.png" id="2_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://mn6dwpmqsj31" path="res://space_game_2d_assets/ship_E.png" id="2_onrkg"]
+[ext_resource type="AudioStream" uid="uid://cg306846enu0u" path="res://space_game_audio/phaseJump5.ogg" id="4_hqtel"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i3pqv"]
+radius = 18.0
+height = 48.0
+
+[node name="Player" type="Area2D"]
+position = Vector2(336, 259)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_sweqy")
+metadata/_edit_group_ = true
+
+[node name="Boost" type="PulsingSprite" parent="."]
+pulse_speed = 2.5
+position = Vector2(-32, 15)
+texture = ExtResource("2_i3pqv")
+region_enabled = true
+
+[node name="Ship" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0.5372549, 1, 1)
+texture = ExtResource("2_onrkg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_i3pqv")
+
+[node name="FiringPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -25)
+
+[node name="BoostSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_hqtel")
+volume_db = -27.0
+pitch_scale = 0.75
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="pulse_complete" from="Boost" to="." method="_on_boost_pulse_complete"]

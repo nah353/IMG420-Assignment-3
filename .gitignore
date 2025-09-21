@@ -1,0 +1,44 @@
+# -----------------------
+# Godot-specific
+# -----------------------
+
+# Godot editor config
+.import/
+.export/
+.export_presets.cfg
+godot_project.binary.*   # old binary project files
+
+# -----------------------
+# GDExtension / C++ build
+# -----------------------
+
+# Compiled binaries
+bin/
+*.dll
+*.so
+*.dylib
+*.lib
+*.exp
+*.pdb
+*.obj
+*.o
+*.a
+
+# Build folders
+build/
+*.vcxproj.user
+*.vcxproj.filters
+*.user
+*.vs/
+
+# GDNative cache
+.gdnlib/
+.gdns.cache/
+
+# -----------------------
+# OS-specific
+# -----------------------
+
+# Windows
+Thumbs.db
+Desktop.ini

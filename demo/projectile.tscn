@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxtw4bymqfu4a"]
+
+[ext_resource type="Script" uid="uid://qxj7yswbwd7p" path="res://projectile.gd" id="1_qxf0c"]
+[ext_resource type="Texture2D" uid="uid://d2c7xc2vwh6pt" path="res://space_game_2d_assets/effect_yellow.png" id="2_qxf0c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgwo2"]
+size = Vector2(10.000002, 59)
+
+[node name="Projectile" type="Area2D"]
+top_level = true
+position = Vector2(23, 41)
+rotation = 1.5707964
+collision_layer = 8
+collision_mask = 5
+script = ExtResource("1_qxf0c")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-7.869302e-07, -18.001808)
+rotation = 0.0002829219
+scale = Vector2(0.2, 1)
+texture = ExtResource("2_qxf0c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.1981541e-06, -22.001808)
+shape = SubResource("RectangleShape2D_dgwo2")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(4.363234e-08, 0.99819183)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

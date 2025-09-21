@@ -1,0 +1,76 @@
+[gd_scene load_steps=12 format=3 uid="uid://fudoh8bjbjlb"]
+
+[ext_resource type="Script" uid="uid://bnd8xebs6ehp6" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bmuvme3i6amii" path="res://meteor.tscn" id="2_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bintxnwd1g85m" path="res://experience.tscn" id="3_7mycd"]
+[ext_resource type="PackedScene" uid="uid://b5l6jpr8gmxh3" path="res://player.tscn" id="3_lquwl"]
+[ext_resource type="PackedScene" uid="uid://e6go5bc8yywi" path="res://hud.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://bxtw4bymqfu4a" path="res://projectile.tscn" id="5_lquwl"]
+[ext_resource type="AudioStream" uid="uid://bixkyf6g41ycw" path="res://dodge_the_creeps_2d_assets/art/House In a Forest Loop.ogg" id="7_5vw27"]
+[ext_resource type="AudioStream" uid="uid://dmxqnbftct77i" path="res://dodge_the_creeps_2d_assets/art/gameover.wav" id="8_kek77"]
+
+[sub_resource type="Gradient" id="Gradient_lquwl"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7mycd"]
+gradient = SubResource("Gradient_lquwl")
+
+[sub_resource type="Curve2D" id="Curve2D_7mycd"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 720, 376, 0, 0, 0, 0, 720, 720, 0, 0, 0, 0, 480, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0)
+}
+point_count = 8
+
+[node name="Main" type="Node"]
+script = ExtResource("1_h2yge")
+meteor_scene = ExtResource("2_lquwl")
+experience_scene = ExtResource("3_7mycd")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(360.00003, 360)
+scale = Vector2(2.8125, 720.00006)
+texture = SubResource("GradientTexture1D_7mycd")
+
+[node name="Projectiles" parent="." instance=ExtResource("5_lquwl")]
+visible = false
+position = Vector2(-48, 24)
+
+[node name="Player" parent="." instance=ExtResource("3_lquwl")]
+position = Vector2(0, 0)
+
+[node name="MeteorTimer" type="Timer" parent="."]
+wait_time = 4.0
+
+[node name="GameClockTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(360, 480)
+
+[node name="MeteorPath" type="Path2D" parent="."]
+position = Vector2(-184, -176)
+scale = Vector2(1.5, 1.5)
+curve = SubResource("Curve2D_7mycd")
+
+[node name="MeteorSpawnLocation" type="PathFollow2D" parent="MeteorPath"]
+
+[node name="HUD" parent="." instance=ExtResource("4_1bvp3")]
+
+[node name="MainMusic" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("7_5vw27")
+volume_db = -15.0
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_kek77")
+volume_db = -12.0
+
+[connection signal="timeout" from="MeteorTimer" to="." method="_on_meteor_timer_timeout"]
+[connection signal="timeout" from="GameClockTimer" to="." method="_on_game_clock_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="upgrade_selected" from="HUD" to="." method="_on_hud_upgrade_selected"]

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bintxnwd1g85m"]
+
+[ext_resource type="Texture2D" uid="uid://cbaxp5meaqw4u" path="res://space_game_2d_assets/star_small.png" id="1_eu0gq"]
+[ext_resource type="Script" uid="uid://cfrkeshjd0u44" path="res://experience.gd" id="1_rronj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eu0gq"]
+radius = 11.045361
+
+[node name="Experience" type="Area2D" groups=["experience"]]
+z_index = -2
+collision_layer = 4
+collision_mask = 11
+script = ExtResource("1_rronj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.11764706, 0.85490197, 0.31764707, 1)
+texture = ExtResource("1_eu0gq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_eu0gq")
