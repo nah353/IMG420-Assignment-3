@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo6x38osmrdm4"]
+
+[ext_resource type="Script" uid="uid://bnxpbv5ij0cl" path="res://XpBoid.cs" id="1_wnvcm"]
+[ext_resource type="Texture2D" uid="uid://cbaxp5meaqw4u" path="res://space_game_2d_assets/star_small.png" id="2_hv575"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_75nls"]
+radius = 7.28011
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xxvxu"]
+radius = 60.00833
+
+[node name="XP Boid" type="Area2D" groups=["experience"]]
+collision_layer = 4
+collision_mask = 11
+script = ExtResource("1_wnvcm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.11764706, 0.85490197, 0.31764707, 1)
+texture = ExtResource("2_hv575")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_75nls")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_xxvxu")

@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bnd8xebs6ehp6" path="res://main.gd" id="1_h2yge"]
 [ext_resource type="PackedScene" uid="uid://bmuvme3i6amii" path="res://meteor.tscn" id="2_lquwl"]
-[ext_resource type="PackedScene" uid="uid://bintxnwd1g85m" path="res://experience.tscn" id="3_7mycd"]
 [ext_resource type="PackedScene" uid="uid://b5l6jpr8gmxh3" path="res://player.tscn" id="3_lquwl"]
 [ext_resource type="PackedScene" uid="uid://e6go5bc8yywi" path="res://hud.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://bxtw4bymqfu4a" path="res://projectile.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://csicp1dtyu81u" path="res://flock.tscn" id="6_kek77"]
 [ext_resource type="AudioStream" uid="uid://bixkyf6g41ycw" path="res://dodge_the_creeps_2d_assets/art/House In a Forest Loop.ogg" id="7_5vw27"]
 [ext_resource type="AudioStream" uid="uid://dmxqnbftct77i" path="res://dodge_the_creeps_2d_assets/art/gameover.wav" id="8_kek77"]
 
@@ -24,7 +24,6 @@ point_count = 8
 [node name="Main" type="Node"]
 script = ExtResource("1_h2yge")
 meteor_scene = ExtResource("2_lquwl")
-experience_scene = ExtResource("3_7mycd")
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -10
@@ -38,6 +37,8 @@ position = Vector2(-48, 24)
 
 [node name="Player" parent="." instance=ExtResource("3_lquwl")]
 position = Vector2(0, 0)
+
+[node name="Flock" parent="." instance=ExtResource("6_kek77")]
 
 [node name="MeteorTimer" type="Timer" parent="."]
 wait_time = 4.0

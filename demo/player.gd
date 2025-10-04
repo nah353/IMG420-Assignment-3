@@ -30,8 +30,11 @@ var current_level := 1
 
 var boosting = false
 
+var base_color := Color(1, 1, 1)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	base_color = modulate
 	screen_size = get_viewport_rect().size
 	hide()
 	connect("boosting_changed",  Callable($Boost, "_on_player_boosting_changed"))
@@ -113,37 +116,30 @@ func _on_area_entered(area: Area2D) -> void:
 		if current_health <= 0:
 			if get_parent().has_method("game_over"):
 				get_parent().game_over()
-				
-	elif area.is_in_group("experience"):
-		var xp = area
-		xp.queue_free()
-		current_xp += 100
-		while current_xp >= max_xp:
-			current_xp -= max_xp
-			current_level += 1
-			max_xp += max_xp_increase
-			emit_signal("level_up", current_level)
-		emit_signal("experience_changed", current_xp, current_level, max_xp)
+			
+func add_experience(amount: int) -> void:
+	current_xp += amount
+	while current_xp >= max_xp:
+		current_xp -= max_xp
+		current_level += 1
+		max_xp += max_xp_increase
+		emit_signal("level_up", current_level)
+	emit_signal("experience_changed", current_xp, current_level, max_xp)
 		
 func _take_damage():
 	# Update health
 	current_health -= 1
 	emit_signal("health_changed", current_health)
-	
-	var original_color = modulate
-	modulate = Color(1, 0, 0)
 	$CollisionShape2D.call_deferred("set", "disabled", true)
+	apply_tint(Color(1, 0, 0), 0.3)
 	await get_tree().create_timer(0.3).timeout
-	modulate = original_color
 	$CollisionShape2D.call_deferred("set", "disabled", false)
 
 # Do effects upon max boost reached
 func _on_boost_pulse_complete() -> void:
-	$BoostSound.play()
+	apply_tint(Color(1.6, 1.6, 1.6), 0.5)
 	
-	# Tint ship color
-	var original_color = modulate
-	modulate = Color(1.6, 1.6, 1.6)
-	await get_tree().create_timer(0.5).timeout
-	modulate = original_color
-	
+func apply_tint(color: Color, duration: float) -> void:
+	modulate = color
+	await get_tree().create_timer(duration).timeout
+	modulate = base_color

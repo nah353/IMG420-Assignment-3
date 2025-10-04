@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://csicp1dtyu81u"]
+
+[ext_resource type="Script" uid="uid://d3ah88bajgcyd" path="res://Flock.cs" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://bo6x38osmrdm4" path="res://xp_boid.tscn" id="2_880h2"]
+
+[node name="Flock" type="Node2D"]
+script = ExtResource("1_0xm2m")
+BoidScene = ExtResource("2_880h2")

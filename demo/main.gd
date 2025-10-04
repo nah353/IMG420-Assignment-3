@@ -1,9 +1,10 @@
 extends Node
 
 @export var meteor_scene: PackedScene
-@export var experience_scene: PackedScene
 var time
 var meteor_split_count = 2
+var xp_spawn_count = 5
+var xp_value = 20
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -88,10 +89,24 @@ func _split_meteors(parent: Meteor, new_size: int) -> void:
 		call_deferred("add_child", child)
 		
 func _drop_experience(pos: Vector2) -> void:
-	var xp = experience_scene.instantiate()
-	xp.global_position = pos
-	xp.add_to_group("experience")
-	call_deferred("add_child", xp)
+	call_deferred("_spawn_boids_deferred", pos)
+		
+func _spawn_boids_deferred(pos: Vector2) -> void:
+	var player = $Player
+	var flock = $Flock
+	if flock == null:
+		push_error("Flock node not found")
+		return
+
+	for i in range(xp_spawn_count):
+		var boid = flock.SpawnBoidAtPosition(pos, player)
+		if boid != null:
+			if not boid.Collected.is_connected(Callable(self, "_on_boid_collected")):
+				boid.Collected.connect(Callable(self, "_on_boid_collected"))
+
+# Handle adding experience to player
+func _on_boid_collected():
+	$Player.add_experience(xp_value)
 	
 func _on_player_level_up(level: int):
 	$HUD.show_upgrade_menu()
