@@ -1,3 +1,5 @@
+// Adapted from Boid.cs implementation provided on Canvas with player collision added
+
 using Godot;
 using System;
 using System.Collections.Generic;
